@@ -16,4 +16,4 @@ rect.attr('width', 150);
 rect.attr('height', 60);
 rect.attr('fill', 'blue');
 
-const rect = d3.select('#canvas')
+const rect = d3.select('#canvas');
