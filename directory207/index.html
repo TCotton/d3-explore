@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>Using SVG</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<!-- Bootstrap grid setup -->
+<div class="container">
+    <div class="row">
+        <div id="chart-area">
+        </div>
+    </div>
+</div>
+
+<!-- Custom JS -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script>
+
+	const svg = d3.select('#chart-area')
+		.append('svg')
+		.attr('width', 400)
+		.attr('height', 400);
+
+	d3.csv('data/ages.csv', function(error, data) {
+		if (error) {
+			throw error;
+		}
+
+		data.forEach((d) => {
+			d.age = Number.parseInt(d.age);
+		});
+
+		const circle = svg.selectAll('circle').data(data);
+
+		circle.enter().append('circle')
+			.attr('cx', (d, i) => {
+				return (i * 50) + 25;
+			})
+			.attr('cy', 25)
+			.attr('r', (d) => {
+				return d.age * 2;
+			})
+			.attr('fill', (d) => {
+				return d.name === 'Tony' ? 'blue' : 'red';
+			});
+	});
+
+</script>
+
+</body>
+</html>
