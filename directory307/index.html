@@ -38,20 +38,17 @@
 			d.height = Number.parseInt(d.height);
 		});
 
-		const names = data.map((d) => {
-			if (d.name) {
+		const x = d3.scaleBand().domain(data.map((d) => {
 				return d.name;
-			}
-
-		});
-
-		const x = d3.scaleBand().domain(names)
+			}))
 			.range([0, 400])
 			.paddingInner(0.3)
 			.paddingOuter(0.2);
 
 		const y = d3.scaleLinear()
-			.domain([0, 828])
+			.domain([0, d3.max(data, (d) => {
+				return d.height;
+            })])
 			.range([0, 400]);
 
 		svg.selectAll('rect')
