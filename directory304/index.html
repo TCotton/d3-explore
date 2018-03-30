@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>Using SVG</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<!-- Bootstrap grid setup -->
+<div class="container">
+    <div class="row">
+        <div id="chart-area">
+        </div>
+    </div>
+</div>
+
+<!-- Custom JS -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script>
+
+    // error: d3.v4.js:1220 Error: <rect> attribute height: A negative value is not valid. ("-11974.863377504553")
+
+	const svg = d3.select('#chart-area')
+		.append('svg')
+		.attr('width', 400)
+		.attr('height', 400);
+
+	d3.json('data/buildings.json', function(error, data) {
+		if (error) {
+			throw error;
+		}
+
+		data.forEach((d) => {
+			d.height = Number.parseInt(d.height);
+		});
+
+		const x = d3.scaleTime()
+			.domain([
+				new Date(2000, 0, 1),
+				new Date(2001, 0, 1),
+			])
+			.range([0, 400]);
+
+		const rect = svg.selectAll('rect')
+			.data(data)
+			.enter()
+			.append('rect')
+			.attr('y', 20)
+			.attr('x', (d, i) => {
+				return 60 * i;
+			})
+			.attr('width', 40)
+			.attr('height', (d) => {
+				return x(d.height);
+			})
+			.attr('fill', (d) => {
+				if (d) {
+					return 'grey';
+				}
+			});
+	});
+
+</script>
+
+</body>
+</html>
