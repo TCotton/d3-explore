@@ -10,3 +10,5 @@ and range (e.g screen pixels)
 read more: scaleLinear, scaleLog, scaleTime, scaleOrdinal
 
 band scales equally space out columns
+
+use scaleBand to make a bar chart
